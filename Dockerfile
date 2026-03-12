@@ -17,12 +17,13 @@ COPY pyproject.toml .
 # Installiamo Flask
 # RUN uv pip install --system flask
 
-RUN uv pip install --system --no-cache-dir --upgrade -r pyproject.toml
+RUN uv pip install --system --no-cache -r pyproject.toml
 
 # Copiamo il progetto
 COPY . .
 
 
 # Avvio
-CMD ["gunicorn", "--bind", "0.0.0.0:80", "app:create_app()"]
+CMD ["/bin/bash", "docker-entrypoint.sh"]
+# CMD ["gunicorn", "--bind", "0.0.0.0:80", "app:create_app()"]
 # ["flask", "run", "--host", "0.0.0.0"]

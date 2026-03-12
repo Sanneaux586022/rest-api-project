@@ -5,7 +5,7 @@ from flask import Flask, jsonify
 from flask_smorest import Api
 from flask_jwt_extended import JWTManager
 from flask_migrate import Migrate
-
+from dotenv import load_dotenv
 from db import db, r
 
 from resources.item import blp as ItemBlueprint
@@ -22,6 +22,7 @@ def create_app(db_url=None):
 
     app = Flask(__name__)
 
+    load_dotenv()
     # create a flask app 
     app.config["PROPAGATE_EXCEPTIONS"] = True
     app.config["API_TITLE"] = "Stores REST API"
@@ -131,3 +132,4 @@ def create_app(db_url=None):
 # f22ba88eb2938478b75eb0a03360da31e5a7eb99585d5e3ff5470d8941170a11
 # prima fare partire redis collegandolo al netework sanonet che abbiamo creato docker run -d --name redis --network mynetwork redis:latest
 # poi questo docker run -dp 5000:5000 -w /app -v "$(pwd):/app" --network sanonet -e REDIS_URL=redis://redis:6379 flask-smorest-api:latest 
+# docker compose up --build --force-recreate --no-deps web

@@ -13,5 +13,6 @@ dependencies = [
     "passlib",
     "redis",
     "flask-migrate",
-    "gunicorn"
+    "gunicorn",
+    "psycopg2-binary"
 ]
