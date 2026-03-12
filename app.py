@@ -39,7 +39,7 @@ def create_app(db_url=None):
     import models
     api = Api(app)
 
-    app.config["SECRET_KEY"] = "f22ba88eb2938478b75eb0a03360da31e5a7eb99585d5e3ff5470d8941170a11"
+    app.config["SECRET_KEY"] = os.getenv("SECRET_KEY")
     jwt = JWTManager(app)
 
     @jwt.token_in_blocklist_loader
