@@ -17,13 +17,12 @@ COPY pyproject.toml .
 # Installiamo Flask
 # RUN uv pip install --system flask
 
-RUN uv pip install --system --no-cache -r pyproject.toml
+RUN uv pip install --system --no-cache-dir --upgrade -r pyproject.toml
 
 # Copiamo il progetto
 COPY . .
 
-# Espone porta Flask
-EXPOSE 5000
 
 # Avvio
-CMD ["flask", "run", "--host", "0.0.0.0"]
+CMD ["gunicorn", "--bind", "0.0.0.0:80", "app:create_app()"]
+# ["flask", "run", "--host", "0.0.0.0"]

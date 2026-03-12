@@ -12,5 +12,6 @@ dependencies = [
     "flask-jwt-extended",
     "passlib",
     "redis",
-    "flask-migrate"
+    "flask-migrate",
+    "gunicorn"
 ]
