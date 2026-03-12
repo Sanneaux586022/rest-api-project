@@ -1,0 +1,16 @@
+[project]
+name = "rest-api-with-flask"
+version = "0.1.0"
+description = "Corso Di creazione di api con flask"
+requires-python = ">=3.10"
+dependencies = [
+    "flask",
+    "flask-smorest",
+    "flask-sqlalchemy",
+    "python-dotenv",
+    "sqlalchemy",
+    "flask-jwt-extended",
+    "passlib",
+    "redis",
+    "flask-migrate"
+]
