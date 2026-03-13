@@ -14,5 +14,7 @@ dependencies = [
     "redis",
     "flask-migrate",
     "gunicorn",
-    "psycopg2-binary"
+    "psycopg2-binary",
+    "requests",
+    "rq"
 ]

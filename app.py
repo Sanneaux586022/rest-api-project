@@ -1,12 +1,16 @@
 import logging
 import os
 import models
+import redis
+from rq import Queue
+
 from flask import Flask, jsonify
 from flask_smorest import Api
 from flask_jwt_extended import JWTManager
 from flask_migrate import Migrate
 from dotenv import load_dotenv
 from db import db, r
+from core.config import configs
 
 from resources.item import blp as ItemBlueprint
 from resources.store import blp as StoreBlueprint
@@ -21,9 +25,13 @@ logger = logging.getLogger(__name__)
 def create_app(db_url=None):
 
     app = Flask(__name__)
-
     load_dotenv()
+    env=os.getenv("ENV", "development")
+
+    connection = redis.from_url(os.getenv("REDIS_URL"))
     # create a flask app 
+    app.queue = Queue("emails", connection=connection)
+    app.config.from_object(configs[env])
     app.config["PROPAGATE_EXCEPTIONS"] = True
     app.config["API_TITLE"] = "Stores REST API"
     app.config["API_VERSION"] = "v1"
@@ -31,7 +39,7 @@ def create_app(db_url=None):
     app.config["OPENAPI_URL_PREFIX"] = "/"
     app.config["OPENAPI_SWAGGER_UI_PATH"] = "/swagger-ui"
     app.config["OPENAPI_SWAGGER_UI_URL"] = "https://cdn.jsdelivr.net/npm/swagger-ui-dist/"
-    app.config["SQLALCHEMY_DATABASE_URI"] = db_url or os.getenv("DATABASE_URL", "sqlite:///data.db")
+    # app.config["SQLALCHEMY_DATABASE_URI"] = db_url or os.getenv("DATABASE_URL", "sqlite:///data.db")
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
     db.init_app(app) # inizializza l'estensione SQLAlchemy di Flask dandogli 
